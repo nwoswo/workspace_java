@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.trans.repo.mapper.ArchivoMapper">
+
+
+   <resultMap id="BaseResultMap" type="pe.mef.trans.web.solicitud.vo.tsoDArchivosVo">
+
+
+	<result column="ARC_C_ARCHIVO" jdbcType="DECIMAL" property="arcCArchivo" />
+    <result column="ARC_D_ARCHIVO" jdbcType="VARCHAR" property="arcDArchivo" />
+    <result column="ARC_D_NOMBRE" jdbcType="VARCHAR" property="arcDNombre" />
+    <result column="ARC_F_ARCHIVO" jdbcType="VARCHAR" property="arcFArchivo" />
+    <result column="ARC_E_ARCHIVO" jdbcType="DECIMAL" property="arcEArchivo" />
+    <result column="ARC_D_CONTENTYPE" jdbcType="VARCHAR" property="arcDContentype" />
+    <result column="SOL_C_DOCUMENTO" jdbcType="DECIMAL" property="solCDocumento" />
+    <result column="ARE_D_NOMBRE" jdbcType="VARCHAR" property="areDNombre" />
+    
+    <result column="ARC_C_TIPO" jdbcType="VARCHAR" property="arcCTipo" />
+  
+    
+    
+  </resultMap>
+  
+  
+    <select id="getListFile"  resultMap="BaseResultMap" parameterType="pe.mef.trans.web.solicitud.vo.tsoDArchivosVo">
+      SELECT 
+           ar.ARC_C_ARCHIVO,
+           ar.ARC_D_ARCHIVO,
+           ar.ARC_D_NOMBRE,
+           TO_CHAR(ar.ARC_F_ARCHIVO, 'dd-MM-yyyy') as  ARC_F_ARCHIVO,
+           ar.ARC_E_ARCHIVO,
+           ar.ARC_D_CONTENTYPE,
+           ar.SOL_C_DOCUMENTO,
+           area.ARE_D_NOMBRE,
+           ar.ARC_C_TIPO
+             
+        FROM TSOD_ARCHIVOS ar
+        left outer join  TSOC_AREA area on ar.ARE_C_AREA = area.ARE_C_AREA
+        WHERE 1 = 1
+        
+         <if test="solCDocumento != 0">
+   			and	ar.SOL_C_DOCUMENTO=#{solCDocumento,jdbcType=DECIMAL}
+  		</if>
+		<if test="rinCRequerimiento != 0">
+		    AND ar.RIN_C_REQUERIMIENTO=#{rinCRequerimiento,jdbcType=DECIMAL}
+		</if>
+		
+		<if test="arcCTipo != 0">
+		AND ( ar.ARC_C_TIPO=#{arcCTipo,jdbcType=DECIMAL} OR ar.ARC_C_TIPO=4 OR ar.ARC_C_TIPO=5)
+		
+		</if>
+		
+		ORDER BY  ar.ARC_C_ARCHIVO 
+		
+  
+   
+      
+</select>
+
+
+
+	<insert id="insert"
+		parameterType="pe.mef.trans.web.solicitud.vo.tsoDArchivosVo">
+
+		insert into TSOD_ARCHIVOS
+		(
+		ARC_C_ARCHIVO,
+		ARC_D_ARCHIVO,
+		ARC_D_NOMBRE,
+		ARC_F_ARCHIVO,
+		ARC_E_ARCHIVO,
+		ARC_B_FILE,
+		ARC_C_TIPO,
+		ARC_D_CONTENTYPE,
+		SOL_C_DOCUMENTO,
+		RIN_C_REQUERIMIENTO,
+		USU_C_USUARIO,
+		ARE_C_AREA
+		)
+		values (
+		#{arcCArchivo,jdbcType=DECIMAL},
+		#{arcDArchivo,jdbcType=VARCHAR},
+		#{arcDNombre,jdbcType=VARCHAR},
+		SYSDATE,
+		1,
+		#{arcBFile,jdbcType=OTHER},
+		#{arcCTipo,jdbcType=DECIMAL},
+		#{arcDContentype,jdbcType=VARCHAR},
+		#{solCDocumento,jdbcType=DECIMAL},
+		#{rinCRequerimiento,jdbcType=DECIMAL},
+		#{usuCUsuario,jdbcType=DECIMAL},
+		#{areCArea,jdbcType=DECIMAL}
+
+		)
+
+
+	</insert>
+
+
+
+  <select id="getFile"  resultMap="BaseResultMap" parameterType="pe.mef.trans.web.solicitud.vo.tsoDArchivosVo">
+        SELECT ARC_B_FILE  AS  fileDataBytes,
+        
+        	   ARC_D_ARCHIVO,
+        	   ARC_D_NOMBRE,
+        	   ARC_D_CONTENTYPE
+        	   
+        FROM TSOD_ARCHIVOS
+        WHERE ARC_C_ARCHIVO=#{arcCArchivo,jdbcType=DECIMAL} 
+      
+</select>
+
+
+
+  <select id="getIdFile"  resultType="int" >
+        SELECT SEQ_TSOD_ARCHIVOS_04.NEXTVAL 
+        	   
+        FROM dual
+         
+      
+</select>
+
+
+	<delete id = "deleteByid" parameterType="map">
+      DELETE from TSOD_ARCHIVOS WHERE ARC_C_ARCHIVO =  #{param1,jdbcType=DECIMAL} 
+   </delete>
+
+
+		
+      
+      
+      
+
+
+
+
+
+
+</mapper>

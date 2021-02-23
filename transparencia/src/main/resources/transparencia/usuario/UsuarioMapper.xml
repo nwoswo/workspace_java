@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.trans.repo.mapper.UsuarioMapper">
+
+	<resultMap
+		type="pe.mef.trans.web.usuario.vo.GsecUsuario"
+		id="usuarioResultMap">
+		<result property="usuCUsuario" column="USU_C_USUARIO" />
+		<result property="usuDUsuario" column="USU_D_USUARIO" />
+		
+		<result property="usuEUsuario" column="USU_E_USUARIO" />
+		<result property="tracArea.areCArea" column="ARE_C_AREA" />
+		<result property="gpecPersona.traCCodigo" column="TRA_C_CODIGO" />
+		
+	
+		<result property="shorttraDNombre" column="ARE_D_NOMBRE" />
+		
+	
+		<result property="gpecPersona.traCSexos" column="TRA_C_SEXOS" />
+		<result property="gpecPersona.traDApemat" column="TRA_D_APEMAT" />
+		<result property="gpecPersona.traDApepat" column="TRA_D_APEPAT" />
+		<result property="gpecPersona.traDNombres" column="TRA_D_NOMBRES" />
+		<result property="gpecPersona.traNNrodoc" column="TRA_N_NRODOC" />
+		<result property="gpecPersona.traNCelular" column="TRA_N_CELULAR" />
+		
+	</resultMap>
+
+	<select id="findAll" resultMap="usuarioResultMap">
+		select
+		u.USU_C_USUARIO,
+		u.USU_D_USUARIO,
+		
+		u.USU_E_USUARIO,
+		u.ARE_C_AREA,
+		u.TRA_C_CODIGO,
+		u.USU_N_UBIGEO as usuNUbigeo, 
+		
+		
+    	a.ARE_D_NOMBRE,
+    
+    	t.TRA_C_SEXOS,
+		t.TRA_D_APEMAT,
+		t.TRA_D_APEPAT,
+    	t.TRA_D_NOMBRES,
+		t.TRA_N_NRODOC,
+		t.TRA_N_CELULAR
+		
+		from
+		TSOC_USUARIO u
+		   
+	    left outer join TSOC_AREA a on 	u.ARE_C_AREA = a.ARE_C_AREA 
+	    left outer join 	TSOC_TRABAJADOR t  on 	u.TRA_C_CODIGO = t.TRA_C_CODIGO 
+    
+		order by u.USU_C_USUARIO 
+		DESC
+	</select>
+
+
+  <insert id="call_pkg_tra_usuario" statementType="CALLABLE" parameterType="pe.mef.trans.web.config.Transaccion" >
+    	{ call TRANSPARENCIA.PKG_TRA_USUARIO.SP_RUS_REGISTRO(	    	
+	    	#{traDatos, 		mode=IN, jdbcType=VARCHAR},	    	
+	    	#{sCOD,          mode=OUT, jdbcType=VARCHAR},
+	    	#{sDESCOD,          mode=OUT, jdbcType=VARCHAR}
+	    )}
+	</insert>
+
+
+ 
+  <update id="updateEstado" parameterType="pe.mef.trans.web.usuario.vo.GsecUsuario"  >
+    <!-- query
+    -->
+    update TSOC_USUARIO
+ 	set
+        USU_E_USUARIO = #{usuEUsuario,jdbcType=INTEGER }
+    
+    where     
+      USU_C_USUARIO = #{usuCUsuario,jdbcType=INTEGER }
+    
+  </update>  
+  
+   <update id="updatePassword" parameterType="pe.mef.trans.web.usuario.vo.GsecUsuario"  >
+    <!-- query
+    -->
+    update TSOC_USUARIO
+ 	set
+        USU_D_PASSWORD = #{usuDPassword,jdbcType=INTEGER }
+    
+    where     
+      USU_C_USUARIO = #{usuCUsuario,jdbcType=INTEGER }
+    
+  </update>  
+  
+  
+  
+   <insert id="call_sp_rus_registro" statementType="CALLABLE" parameterType="pe.mef.trans.web.config.Transaccion" >
+    	{ call TRANSPARENCIA.PKG_TRA_USUARIO.SP_RUS_UPDATE(	    	
+	    	#{traDatos, 		mode=IN, jdbcType=VARCHAR},	    	
+	    	#{sCOD,          mode=OUT, jdbcType=VARCHAR},
+	    	#{sDESCOD,          mode=OUT, jdbcType=VARCHAR}
+	    )}
+	</insert>
+	
+		
+   
+   
+   
+</mapper>

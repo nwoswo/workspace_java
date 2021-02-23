@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.trans.repo.mapper.ReqinfMapper">
+
+
+
+<resultMap type="pe.mef.trans.web.solicitud.vo.tsoDReqinf"
+		id="requerimientoResultMap">
+
+		<result property="rinCRequerimiento" column="RIN_C_REQUERIMIENTO" />
+		<result property="rinDEtalle" column="RIN_D_DETALLE" />
+		<result property="rinFRequerimiento" column="RIN_F_REQUERIMIENTO" />
+		<result property="rinEstado" column="RIN_E_ESTADO" />
+		<result property="solCDocumento" column="SOL_C_DOCUMENTO" />
+		<result property="areCArea" column="ARE_C_AREA" />
+		<result property="areaDarea" column="ARE_D_NOMBRE" />
+		
+	</resultMap>
+
+
+	<select id="findAllRequerimientos"
+		resultMap="requerimientoResultMap" parameterType="pe.mef.trans.web.solicitud.vo.tsoDReqinf">
+
+
+		select
+		r.RIN_C_REQUERIMIENTO,
+		r.RIN_D_DETALLE,
+		TO_CHAR(r.RIN_F_REQUERIMIENTO, 'dd-MM-yyyy') as RIN_F_REQUERIMIENTO,
+		r.RIN_E_ESTADO,
+		r.SOL_C_DOCUMENTO,
+		r.ARE_C_AREA,
+		a.ARE_D_NOMBRE,
+		nroArchivos,
+		r.RIN_D_RESPUESTA as rinDRespuesta
+		
+		from
+		TSOD_REQINF r
+		inner join TSOC_AREA a on r.ARE_C_AREA=a.ARE_C_AREA and SOL_C_DOCUMENTO =
+		#{solCDocumento,jdbcType=INTEGER } 
+		
+		
+		left join ( select RIN_C_REQUERIMIENTO,count(*) nroArchivos from
+		TSOD_ARCHIVOS group by RIN_C_REQUERIMIENTO ) a on
+		r.RIN_C_REQUERIMIENTO = a.RIN_C_REQUERIMIENTO
+		ORDER BY r.RIN_C_REQUERIMIENTO 
+
+	</select>
+
+
+	
+	
+	
+	<select id="findAllRequerimientosBA" resultMap="requerimientoResultMap" parameterType="int">
+
+
+
+		select
+		r.RIN_C_REQUERIMIENTO,
+		r.RIN_D_DETALLE,
+		TO_CHAR(r.RIN_F_REQUERIMIENTO, 'dd-MM-yyyy') as RIN_F_REQUERIMIENTO,
+		r.RIN_E_ESTADO,
+		r.SOL_C_DOCUMENTO,
+		r.ARE_C_AREA,
+		a.ARE_D_NOMBRE,
+		nroArchivos,
+		s.SOL_N_HOJA as solNHoja,
+		r.RIN_D_RESPUESTA as rinDRespuesta
+
+		from
+		TSOD_REQINF r
+		inner join TSOC_AREA a on r.ARE_C_AREA=a.ARE_C_AREA and r.ARE_C_AREA= #{areCArea,jdbcType=INTEGER } 
+		
+		
+		<if test="rinEstado == 1">
+		    AND (r.RIN_E_ESTADO= 1 or r.RIN_E_ESTADO = 2)
+		</if>
+		
+		<if test="rinEstado == 3">
+		    AND r.RIN_E_ESTADO = 3
+		</if>
+		
+		
+		
+		
+		inner join TSOC_SOLICITUD s on s.SOL_C_DOCUMENTO = r.SOL_C_DOCUMENTO
+		
+		left join ( select RIN_C_REQUERIMIENTO,count(*) nroArchivos from TSOD_ARCHIVOS group by RIN_C_REQUERIMIENTO ) a on
+		r.RIN_C_REQUERIMIENTO = a.RIN_C_REQUERIMIENTO
+
+
+	</select>
+
+
+
+	<insert id="insertReqInf"
+		parameterType="pe.mef.trans.web.solicitud.vo.tsoDReqinf">
+
+		insert into TSOD_REQINF
+		(
+		RIN_C_REQUERIMIENTO,
+		RIN_D_DETALLE,
+		RIN_F_REQUERIMIENTO,
+		RIN_E_ESTADO,
+		ARE_C_AREA,
+		SOL_C_DOCUMENTO
+
+		)
+		values (
+
+		SEQ_TSOD_REQINF_05.NEXTVAL,
+		UPPER(#{rinDEtalle,jdbcType=VARCHAR}),
+		SYSDATE,
+		1,
+		#{areCArea,jdbcType=DECIMAL},
+		#{solCDocumento,jdbcType=DECIMAL}
+
+		)
+
+
+	</insert>
+
+
+	<update id="updateRespuesta"
+		parameterType="pe.mef.trans.web.solicitud.vo.tsoDReqinf">
+		
+		
+		update TSOD_REQINF
+		set
+		RIN_D_RESPUESTA = UPPER(#{rinDRespuesta,jdbcType=INTEGER }),
+		RIN_E_ESTADO =  #{rinEstado,jdbcType=INTEGER }
+
+		where
+		RIN_C_REQUERIMIENTO = #{rinCRequerimiento,jdbcType=INTEGER }
+
+	</update>
+	
+	
+	<update id="updatePregunta"
+		parameterType="pe.mef.trans.web.solicitud.vo.tsoDReqinf">
+		
+		
+		update TSOD_REQINF
+		set
+		RIN_D_DETALLE = UPPER(#{rinDEtalle,jdbcType=INTEGER })
+
+		where
+		RIN_C_REQUERIMIENTO = #{rinCRequerimiento,jdbcType=INTEGER }
+
+	</update>
+	
+	
+
+
+
+</mapper>

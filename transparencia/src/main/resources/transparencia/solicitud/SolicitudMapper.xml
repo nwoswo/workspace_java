@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.trans.repo.mapper.SolicitudMapper">
+
+	<resultMap
+		type="pe.mef.trans.web.solicitud.vo.TsocSolicitudVo"
+		id="usuarioResultMap">
+
+		<result property="solCDocumento" column="SOL_C_DOCUMENTO" />
+		<result property="solNHoja" column="SOL_N_HOJA" />
+		<result property="solDInformacion" column="SOL_D_INFORMACION" />
+		<result property="solFRegistro" column="SOL_F_REGISTRO" />
+		<result property="solESolicitud" column="SOL_E_SOLICITUD" />
+
+		<result property="nroArchivos" column="nroArchivos" />
+		<result property="nroreq" column="nroreq" />
+		<result property="nroreqresp" column="nroreqresp" />
+		
+
+
+		<result property="perCSolicitante" column="PER_C_PERSONA" />
+		<result property="perCTipodoc" column="PER_C_TIPODOC" />
+		<result property="perNNrodoc" column="PER_N_NRODOC" />
+		<result property="perDRazonSocial" column="PER_D_RAZON_SOCIAL" />
+		<result property="perDApepat" column="PER_D_APEPAT" />
+		<result property="perDApemat" column="PER_D_APEMAT" />
+		<result property="perDNombre" column="PER_D_NOMBRE" />
+		<result property="perDEmail" column="PER_D_EMAIL" />
+		<result property="perNUbigeo" column="PER_N_UBIGEO" />
+		<result property="perDUrbanizacion" column="PER_D_URBANIZACION" />
+		<result property="perDCalleave" column="PER_D_CALLEAVE" />
+		<result property="perDInterior" column="PER_D_INTERIOR" />
+		<result property="perNCelular" column="PER_N_CELULAR" />
+		<result property="perNTelefono" column="PER_N_TELEFONO" />
+
+
+
+
+	</resultMap>
+	
+<resultMap
+		type="pe.mef.trans.web.solicitud.vo.reniecVO"
+		id="reniecResultMap">
+
+	
+	
+
+	</resultMap>
+	
+	<select id="findDNI" resultMap="reniecResultMap"
+			parameterType="map">
+	
+			select 
+			APELLIDO_PATERNO as perDApepat,
+			APELLIDO_MATERNO as perDApemat,
+			NOMBRES as perDNombre,
+			UBIGEO as perNUbigeo
+			from 
+			FON_RENIEC
+			where
+			TIPO_DOCUMENTO = #{param1,jdbcType=VARCHAR} and
+			NUMERO_DOCUMENTO = #{param2,jdbcType=VARCHAR} 
+			
+	</select>
+
+	<select id="findAll" resultMap="usuarioResultMap"
+		parameterType="map">
+
+
+		select
+		s.SOL_C_DOCUMENTO,
+		s.SOL_N_HOJA,
+		s.SOL_D_INFORMACION,
+		TO_CHAR(s.SOL_F_REGISTRO, 'dd-MM-yyyy') as SOL_F_REGISTRO,
+		s.SOL_E_SOLICITUD,
+		a.total as nroArchivos,
+		TRUNC(sysdate) -TRUNC(s.SOL_F_REGISTRO) AS nrodias,
+    	b.nroreq as nroreq,
+    	c.nroreqresp as nroreqresp,
+    	d.nroacusescan as nroacusescan,
+      e.nrooficio as nrooficio,
+    
+    	dpto.DED_D_DEPART as dedDDepart,
+    	prov.PRD_D_PROVI as prdDProvi,
+    	dist.DID_D_DISTRITO as didDDistrito,
+
+		p.PER_C_PERSONA,
+		p.PER_C_TIPODOC,
+		p.PER_N_NRODOC,
+		p.PER_D_RAZON_SOCIAL,
+		p.PER_D_APEPAT,
+		p.PER_D_APEMAT,
+		p.PER_D_NOMBRE,
+		p.PER_D_EMAIL,
+		p.PER_N_UBIGEO,
+		p.PER_D_URBANIZACION,
+		p.PER_D_CALLEAVE,
+		p.PER_D_INTERIOR,
+		p.PER_N_CELULAR,
+		p.PER_N_TELEFONO,
+		s.SOL_C_ORIGEN as solCOrigen,
+		s.SOL_E_CALIFICACION as solCEcalificacion,
+
+		s.SOL_E_RECOJO as solERecojo,	 
+		
+		TO_CHAR(s.SOL_F_RESPUESTA, 'dd-MM-yyyy') as solFRespuesta,
+		TO_CHAR(s.SOL_F_ENTREGA, 'dd-MM-yyyy') as solFEntrega,
+		p.PER_D_REFERENCIA as perDReferencia
+
+		from
+		TSOC_SOLICITUD s
+		inner join TSOC_PERSONA p on s.PER_C_PERSONA = p.PER_C_PERSONA 
+		<if test=" param2 != ''">
+		
+   			 and s.SOL_N_HOJA LIKE #{param2,jdbcType=VARCHAR}
+  		
+  		</if>
+  		
+		<!-- 
+	
+		<if test=" param1 != 2">
+   			and s.SOL_E_SOLICITUD =  #{param1,jdbcType=INTEGER }
+  		</if>
+		<if test="param1 == 2 ">
+		   AND  (s.SOL_E_SOLICITUD = 2 OR  s.SOL_E_SOLICITUD = 3 OR  s.SOL_E_SOLICITUD = 4  OR  s.SOL_E_SOLICITUD = 7 )
+		</if>
+		 -->
+		 	<if test=" param1 != null ">
+		and s.SOL_E_SOLICITUD IN
+		<foreach item="item"  collection="param1"
+		      open="(" separator="," close=")">
+		        #{item}
+		
+		</foreach>
+		  </if>
+		
+		
+		left outer join ( select SOL_C_DOCUMENTO,count(*) total from TSOD_ARCHIVOS group by SOL_C_DOCUMENTO ) a on s.SOL_C_DOCUMENTO = a.SOL_C_DOCUMENTO
+    
+    	left outer join ( select SOL_C_DOCUMENTO,count(*) nroreq from TSOD_REQINF   group by SOL_C_DOCUMENTO ) b on s.SOL_C_DOCUMENTO = b.SOL_C_DOCUMENTO
+    	left outer join ( select req.SOL_C_DOCUMENTO,count(*) nroreqresp from TSOD_REQINF req where req.RIN_E_ESTADO=3  group by req.SOL_C_DOCUMENTO ) c on s.SOL_C_DOCUMENTO = c.SOL_C_DOCUMENTO
+    
+    	left outer join GPAD_DEPARTAMENTO dpto on dpto.DED_C_DEPART = SUBSTR( LPAD(p.PER_N_UBIGEO ,6,'0') ,0,2)
+    	left outer join GPAD_PROVINCIA prov on prov.PRD_C_PROVI = SUBSTR( LPAD(p.PER_N_UBIGEO ,6,'0') ,0,4)
+    	left outer join GPAD_DISTRITO dist on dist.DID_C_DISTRITO = p.PER_N_UBIGEO
+    	
+    	left outer join (select SOL_C_DOCUMENTO, count(*) nroacusescan from  TSOD_ARCHIVOS where ARC_C_TIPO=5 group by SOL_C_DOCUMENTO) d on d.SOL_C_DOCUMENTO = s.SOL_C_DOCUMENTO
+    	left outer join (select SOL_C_DOCUMENTO, count(*) nrooficio from  TSOD_ARCHIVOS where ARC_C_TIPO=2 group by SOL_C_DOCUMENTO)e on e.SOL_C_DOCUMENTO = s.SOL_C_DOCUMENTO
+    	
+		order by s.SOL_C_DOCUMENTO
+		DESC
+		
+		
+
+
+
+	</select>
+ 
+
+	<update id="call_pkg_spTsoUestado" statementType="CALLABLE"
+		parameterType="pe.mef.trans.web.config.Transaccion" >
+		<!-- query -->
+		
+	
+		{ call
+		PKG_TRA_SOLICITUD.SP_TSO_UESTADO(
+		#{traDatos, mode=IN,
+		jdbcType=VARCHAR},
+		#{sCOD, mode=OUT, jdbcType=VARCHAR},
+		#{sDESCOD,
+		mode=OUT, jdbcType=VARCHAR}
+		)}
+		
+		
+
+	</update>
+	
+	<update id="call_pkg_tsoUsolicitud" statementType="CALLABLE"
+		parameterType="pe.mef.trans.web.config.Transaccion" >
+		<!-- query -->
+		
+	
+		{ call
+		PKG_TRA_SOLICITUD.SP_TSO_USOLICITUD(
+		#{traDatos, mode=IN,
+		jdbcType=VARCHAR},
+		#{sCOD, mode=OUT, jdbcType=VARCHAR},
+		#{sDESCOD,
+		mode=OUT, jdbcType=VARCHAR}
+		)}
+		
+		
+
+	</update>
+	
+	
+
+
+	<insert id="call_pkg_tsoRsolicitud" statementType="CALLABLE"
+		parameterType="pe.mef.trans.web.config.Transaccion">
+		{ call
+		PKG_TRA_SOLICITUD.SP_TSO_RSOLICITUD(
+		#{traDatos, mode=IN,
+		jdbcType=VARCHAR},
+		#{sCOD, mode=OUT, jdbcType=VARCHAR},
+		#{sDESCOD,
+		mode=OUT, jdbcType=VARCHAR}
+		)}
+	</insert>
+
+
+	
+
+	<insert id="call_pkg_tsoDelReq" statementType="CALLABLE"
+		parameterType="pe.mef.trans.web.config.Transaccion">
+		{ call
+		PKG_TRA_SOLICITUD.SP_TSO_DELREQ(
+		#{traDatos, mode=IN,
+		jdbcType=VARCHAR},
+		#{sCOD, mode=OUT, jdbcType=VARCHAR},
+		#{sDESCOD,
+		mode=OUT, jdbcType=VARCHAR}
+		)}
+	</insert>
+	
+	
+	<update id="updateFRespuesta"
+		parameterType="map">
+		
+		
+		update TSOC_SOLICITUD
+		set
+		SOL_F_RESPUESTA = sysdate
+		where
+		SOL_C_DOCUMENTO =  #{param1,jdbcType=INTEGER}
+
+	</update>
+	
+	<update id="updateFEntrega"
+		parameterType="map">
+		
+		
+		update TSOC_SOLICITUD
+		set
+		SOL_F_ENTREGA = sysdate
+		where
+		SOL_C_DOCUMENTO =  #{param1,jdbcType=INTEGER}
+
+	</update>
+	
+
+
+
+
+
+
+
+
+
+</mapper>

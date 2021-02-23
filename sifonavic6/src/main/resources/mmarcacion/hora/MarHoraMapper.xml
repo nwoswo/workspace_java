@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.gob.mef.mrc.hora.domain.mapper.MarcHoraMapper">
+
+
+ <resultMap id="BaseResultMap" type="pe.gob.mef.mrc.hora.domain.entity.GmrcTrabajador" >
+
+  	   <result column="MRC_C_DNI" property="mrcCDni"  />
+  	   <result column="MRC_D_APELLIDOS" property="mrcDApellidos"  />
+  	   <result column="MRC_D_NOMBRES" property="mrcDNombres"  />
+  	   <result column="MRC_N_FOTOCHECK" property="mrcNFotocheck"  />
+  	   <result column="MRC_C_RELOJ" property="mrcCReloj"  />
+  	   <result column="MRC_F_FECHAMARC" property="mrcFFechamarc"  />
+  	   
+
+	    
+	    
+</resultMap>
+
+
+
+   <select id="horaOracle" resultType="java.lang.String" >
+	     SELECT 
+		    to_char(sysdate, 'DD-MM-YYYY hh:mi:ss')  mydate
+		FROM DUAL
+		     
+    </select>
+	
+	
+   <select id="existeTrabajador" resultMap="BaseResultMap" parameterType="map" >
+   select
+		MRC_C_DNI,
+		MRC_D_APELLIDOS,
+		MRC_D_NOMBRES,
+		MRC_N_FOTOCHECK
+	from
+		MARCACION.GMRC_TRABAJADOR 
+	where
+		MRC_C_DNI = #{mrcCDni}
+	     
+   </select>
+   
+   
+   <select id="listTxt" resultMap="BaseResultMap" parameterType="map" >
+   select
+	   MRC_N_FOTOCHECK,
+	   LOWER(to_char(MRC_F_TIMESTAMP, 'DD/MM/YYYY hh:mi a.m.','NLS_DATE_LANGUAGE = American')) as mrcFTimestramp,
+	   to_char(MRC_F_FECHAMARC,'DD/MM/YYYY') as MRC_F_FECHAMARC,
+	   MRC_C_RELOJ 
+   from
+   MARCACION.GMRD_MARCACION
+   	   WHERE MRC_F_FECHAMARC BETWEEN TO_DATE(#{fechaini}, 'DD/MM/YYYY') AND TO_DATE(#{fechafin}, 'DD/MM/YYYY')
+   	   order by MRC_F_TIMESTAMP 
+
+	     
+   </select>
+   
+   
+   
+   
+ <insert id="insertMarcacion" parameterType="pe.gob.mef.mrc.hora.domain.entity.GmrcTrabajador">
+ 
+ 	<selectKey keyProperty="mrcIEmpleado" resultType="int" order="BEFORE">
+    	SELECT MARCACION.SEQ_MRC_MARCACION_01.NEXTVAL  FROM DUAL
+  	</selectKey>	
+  	
+	insert into MARCACION.GMRD_MARCACION
+		(
+		MRC_I_MARCACION,
+		MRC_N_FOTOCHECK,
+		MRC_F_TIMESTAMP,
+		MRC_F_FECHAMARC,
+		MRC_C_RELOJ,
+		MRC_N_ESTADO,
+		
+		USC_C_USUCRE,
+		F_USUARIO_CREA,
+		IP_TERMINAL_CREA
+		)
+	values
+		(
+		#{mrcIEmpleado,jdbcType=DECIMAL},
+		#{mrcNFotocheck,jdbcType=DECIMAL},
+		CURRENT_TIMESTAMP,
+		SYSDATE,
+		#{mrcCReloj,jdbcType=DECIMAL},
+		1,
+		#{uscCUsucre,jdbcType=DECIMAL},
+		sysdate,
+		SYS_CONTEXT('USERENV','IP_ADDRESS')
+		)		
+		
+</insert>
+
+
+   
+</mapper>

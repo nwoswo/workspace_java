@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.trans.repo.mapper.DatosMapper">
+
+	<resultMap
+		type="pe.mef.trans.web.data.vo.tsoCAreaVo"
+		id="usuarioResultMap">
+
+		<result property="areCArea" column="ARE_C_AREA" />
+		<result property="areDNombre" column="ARE_D_NOMBRE" />
+		<result property="areEArea" column="ARE_E_AREA" />
+		
+
+
+
+	</resultMap>
+
+	<select id="findAll" resultMap="usuarioResultMap"
+		parameterType="int">
+
+		SELECT
+		ARE_C_AREA,
+		ARE_D_NOMBRE,
+		ARE_E_AREA
+		from
+		TSOC_AREA
+
+	</select>
+
+
+
+
+</mapper>
