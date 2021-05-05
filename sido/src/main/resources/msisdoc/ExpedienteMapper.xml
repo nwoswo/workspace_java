@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.st.dao.ExpedienteMapper">
+
+
+	<select id="getIdExpediente" resultType="java.lang.Long">
+		SELECT
+		SEQ_RSDC_EXPEDIENTE_1.NEXTVAL FROM DUAL
+	</select>
+
+
+	<insert id="insert"
+		parameterType="pe.mef.st.bean.RsdcExpediente">
+
+		insert into RSDC_EXPEDIENTE
+		(
+		EXP_C_EXPEDIENTE,
+		PER_C_PERSONA,
+		EXP_C_TEXPEDIENTE,
+		EXP_C_TDOCUMENTO,
+		EXP_D_NUMERODOC,
+		EXP_N_FOLIOS,
+		EXP_N_ANEXOS,
+		EXP_N_CD,
+		EXP_D_ASUNTO,
+		EXP_F_REGISTRO,
+		EXP_N_SUBSANAR,
+		EXP_C_UNIDAD_ORIGEN,
+		EXP_C_ESTADO,
+		EXP_E_ESTADO,
+		EXP_D_NROHOJA,
+		EXP_F_TERMINO,
+
+		USC_C_USUCRE,
+		F_USUARIO_CREA,
+		IP_TERMINAL_CREA,
+		PDD_C_MOD_CREACION
+		)
+		values (
+
+		#{expCExpediente,jdbcType=DECIMAL},
+		#{rsdcPersona.perCPersona,jdbcType=DECIMAL},
+		#{expCTexpediente,jdbcType=DECIMAL},
+		#{expCTdocumento,jdbcType=DECIMAL},
+		UPPER(#{expDNumeroDoc,jdbcType=VARCHAR}),
+		#{expNFolios,jdbcType=DECIMAL},
+		#{expNAnexos,jdbcType=DECIMAL},
+		#{expNCd,jdbcType=DECIMAL},
+		UPPER(#{expDAsunto,jdbcType=VARCHAR}),
+		to_date(#{expFRegistro,jdbcType=VARCHAR},'YYYY-MM-DD'),
+		#{expNSubsanar,jdbcType=DECIMAL},
+		#{expCUnidadOrigen,jdbcType=DECIMAL},
+		#{expCEstado,jdbcType=DECIMAL},
+		#{expEEstado,jdbcType=DECIMAL},
+		#{expDNroHoja,jdbcType=VARCHAR},
+		#{expFTermino,jdbcType=VARCHAR},
+
+
+
+
+		1089190,
+		sysdate,
+		SYS_CONTEXT('USERENV','IP_ADDRESS'),
+		423
+		)
+
+
+	</insert>
+
+
+	<update id="updateExpMov"	parameterType="pe.mef.st.bean.RsdcExpediente">
+	
+		update RSDC_EXPEDIENTE set
+		EXP_C_ESTADO = #{expCEstado,jdbcType=DECIMAL},
+		EXP_C_UNIDAD_ORIGEN = #{expCUnidadOrigen,jdbcType=DECIMAL}
+		
+		where EXP_C_EXPEDIENTE = #{expCExpediente,jdbcType=DECIMAL}
+		
+	</update>
+	
+	<update id="updateExpediente"	parameterType="pe.mef.st.bean.RsdcExpediente">
+	
+		update RSDC_EXPEDIENTE set
+		EXP_C_TEXPEDIENTE = #{expCTexpediente,jdbcType=DECIMAL},
+		EXP_C_TDOCUMENTO = #{expCTdocumento,jdbcType=DECIMAL},
+		EXP_D_NUMERODOC = UPPER(#{expDNumeroDoc,jdbcType=VARCHAR}),
+		EXP_N_FOLIOS = #{expNFolios,jdbcType=DECIMAL},
+		EXP_N_ANEXOS = #{expNAnexos,jdbcType=DECIMAL},
+		EXP_N_CD = #{expNCd,jdbcType=DECIMAL},
+		EXP_D_ASUNTO = UPPER(#{expDAsunto,jdbcType=VARCHAR}),
+		EXP_F_REGISTRO = to_date(#{expFRegistro,jdbcType=VARCHAR},'YYYY-MM-DD'),
+		EXP_N_SUBSANAR = #{expNSubsanar,jdbcType=DECIMAL},
+		EXP_C_UNIDAD_ORIGEN = #{expCUnidadOrigen,jdbcType=DECIMAL}
+		
+		where EXP_C_EXPEDIENTE = #{expCExpediente,jdbcType=DECIMAL}
+		
+	</update>
+
+
+	<resultMap type="pe.mef.st.bean.RsdcExpediente"
+		id="expedienteResultMap">
+		
+		<result column="EXP_C_EXPEDIENTE" property="expCExpediente" />
+		<result column="EXP_C_TDOCUMENTO" property="expCTdocumento" />
+		<result column="EXP_C_TEXPEDIENTE" property="expCTexpediente" />
+		<result column="EXP_D_ASUNTO" property="expDAsunto" />
+		<result column="EXP_D_NUMERODOC" property="expDNumeroDoc" />
+		<result column="EXP_F_REGISTRO" property="expFRegistro" />
+		<result column="EXP_N_ANEXOS" property="expNAnexos" />
+		<result column="EXP_N_CD" property="expNCd" />
+		<result column="EXP_N_FOLIOS" property="expNFolios" />
+		<result column="EXP_N_SUBSANAR" property="expNSubsanar" />
+		<result column="exp_d_nrohoja" property="expDNroHoja" />
+			<result column="TDD_D_TIPO_DETALLE" property="racdTDetalle.tddDTipoDetalle" />
+		<result column="EXP_C_ESTADO" property="expCEstado" />
+		<result column="expDEstado" property="expDEstado" />
+		<result column="EXP_C_UNIDAD_ORIGEN" property="expCUnidadOrigen" />
+		
+			<result column="UNO_D_NOMBRE_UNIDAD" property="rtdcUnidadOrganica.unoDNombreUnidad" />
+		
+			<result column="PER_C_PERSONA" property="rsdcPersona.perCPersona" />
+			<result column="PER_C_TIPODOC" property="rsdcPersona.perCTipoDoc" />
+			<result column="per_d_apepat" property="rsdcPersona.perDApepat" />
+			<result column="per_d_apemat" property="rsdcPersona.perDApemat" />
+			<result column="PER_D_CALLEAVE" property="rsdcPersona.perDCalleave" />
+			<result column="PER_D_CELULAR" property="rsdcPersona.perDCelular" />
+			<result column="PER_D_EMAIL" property="rsdcPersona.perDEmail" />
+			<result column="PER_D_INTERIOR" property="rsdcPersona.perDInterior" />
+			<result column="PER_D_NOMBRE" property="rsdcPersona.perDNombre" />
+			<result column="PER_D_NRODOC" property="rsdcPersona.perDNrodoc" />
+			<result column="per_d_razonsocial" property="rsdcPersona.perDRazonSocial" />
+			<result column="PER_D_REFERENCIA" property="rsdcPersona.perDReferencia" />
+			<result column="PER_D_TELEFONO" property="rsdcPersona.perDTelefono" />
+			<result column="PER_D_URBANIZACION" property="rsdcPersona.perDUrbanizacion" />
+			<result column="PER_N_TIPOPERSONA" property="rsdcPersona.perNTipoPersona" />
+			<result column="PER_N_UBIGEO" property="rsdcPersona.perNUbigeo" />
+			
+	</resultMap>
+
+	<select id="listarExpedientes" resultMap="expedienteResultMap">
+
+		select
+		a.EXP_C_EXPEDIENTE,
+        
+		a.exp_d_nrohoja,
+		TO_CHAR(a.EXP_F_REGISTRO,'yyyy-MM-dd') as EXP_F_REGISTRO,
+		a.EXP_C_TDOCUMENTO,
+		c.TDD_D_TIPO_DETALLE,
+		a.EXP_D_NUMERODOC,
+		a.EXP_D_ASUNTO,
+		a.EXP_N_FOLIOS,
+		A.EXP_C_ESTADO,
+
+		CASE a.EXP_C_ESTADO
+			WHEN 1 THEN 'CREADO'
+			WHEN 2 THEN 'RECEPCIONADO'
+			WHEN 3 THEN 'ENVIADO'
+			WHEN 4 THEN 'ATENDIDO'
+			WHEN 5 THEN 'OBSERVADO'
+		END AS expDEstado,
+		b.PER_N_TIPOPERSONA,
+		b.per_d_apepat,
+		b.per_d_apemat,
+		b.PER_D_NOMBRE,
+		b.per_d_razonsocial,
+		(Select Count(*) From RSDH_ARCHIVO d
+            Where a.exp_c_expediente = d.exp_c_expediente )  as nrofiles,
+        a.EXP_C_TEXPEDIENTE,
+        a.EXP_C_UNIDAD_ORIGEN,
+        d.UNO_D_NOMBRE_UNIDAD
+        
+		from
+		RSDC_EXPEDIENTE a
+		left outer join RSDC_PERSONA b 
+            on a.PER_C_PERSONA = b.PER_C_PERSONA
+		left outer join RACD_TIPO_DOC_DETALLE c 
+            on a.EXP_C_TDOCUMENTO = c.TDD_C_TIPO_DOC
+        left outer join RTDC_UNIDAD_ORGANICA d
+            on a.EXP_C_UNIDAD_ORIGEN = d.UNO_C_UNIDAD
+            
+	</select>
+	
+	<select id="getExpediente" resultMap="expedienteResultMap">
+
+		select
+		a.EXP_C_EXPEDIENTE,
+		a.EXP_C_TDOCUMENTO,
+		a.EXP_C_TEXPEDIENTE,
+		a.EXP_D_ASUNTO,
+		a.EXP_D_NUMERODOC,
+		TO_CHAR(a.EXP_F_REGISTRO,'yyyy-MM-dd') as EXP_F_REGISTRO,
+		a.EXP_N_ANEXOS,
+		a.EXP_N_CD,
+		a.EXP_N_FOLIOS,
+		a.EXP_N_SUBSANAR,
+		a.exp_d_nrohoja,
+		c.TDD_D_TIPO_DETALLE,
+		A.EXP_C_ESTADO,
+		CASE a.EXP_C_ESTADO
+			WHEN 1 THEN 'CREADO'
+			WHEN 2 THEN 'RECEPCIONADO'
+			WHEN 3 THEN 'ENVIADO'
+			WHEN 4 THEN 'ATENDIDO'
+			WHEN 5 THEN 'OBSERVADO'
+		END AS expDEstado,
+		
+
+			b.PER_C_PERSONA,
+			b.PER_C_TIPODOC,
+			b.per_d_apemat,
+			b.per_d_apepat,
+			b.PER_D_CALLEAVE,
+			b.PER_D_CELULAR,
+			b.PER_D_EMAIL,
+			b.PER_D_INTERIOR,
+			b.PER_D_NOMBRE,
+			b.PER_D_NRODOC,
+			b.per_d_razonsocial,
+			b.PER_D_REFERENCIA,
+			b.PER_D_TELEFONO,
+			b.PER_D_URBANIZACION,
+			b.PER_N_TIPOPERSONA,
+			LPAD(b.PER_N_UBIGEO, 6, '0') as PER_N_UBIGEO,
+		 a.EXP_C_UNIDAD_ORIGEN
+			
+
+		from
+		RSDC_EXPEDIENTE a
+		left outer join RSDC_PERSONA b on a.PER_C_PERSONA =
+		b.PER_C_PERSONA
+		left outer join RACD_TIPO_DOC_DETALLE c on
+		a.EXP_C_TDOCUMENTO = c.TDD_C_TIPO_DOC
+		
+		where
+		a.EXP_C_EXPEDIENTE = #{expCTexpediente,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteExpediente" parameterType="map">
+	BEGIN
+	  delete from RSDH_ARCHIVO where EXP_C_EXPEDIENTE = #{param1,jdbcType=VARCHAR};
+	  
+	  delete from RSDH_MOVIMIENTO where EXP_C_EXPEDIENTE = #{param1,jdbcType=VARCHAR};
+	  
+	  delete from RSDC_EXPEDIENTE where EXP_C_EXPEDIENTE = #{param1,jdbcType=VARCHAR};
+	END;  
+	</delete>
+
+
+</mapper>

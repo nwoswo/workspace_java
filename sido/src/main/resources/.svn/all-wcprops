@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/resources
+END
+applicationContextMvc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/resources/applicationContextMvc.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/resources/applicationContext.xml
+END
+applicationContextDao.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/resources/applicationContextDao.xml
+END

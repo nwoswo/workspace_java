@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.st.dao.ArchivoMapper">
+
+	
+	
+   <insert id="insert"
+		parameterType="pe.mef.st.bean.RsdhArchivo">
+
+		insert into RSDH_ARCHIVO
+		(
+			ACH_C_ARCHIVO,
+			EXP_C_EXPEDIENTE,
+			EXP_C_UNIDAD_ORIGEN,
+			RIN_C_REQUERIMIENTO,
+			ACH_E_ESTADO,
+			ACH_F_UPLOAD,
+			ACH_B_FILE,
+			ACH_D_CONTENTYPE,
+			ACH_D_ARCHIVO,
+			
+			USC_C_USUCRE,
+			F_USUARIO_CREA,
+			IP_TERMINAL_CREA,
+			PDD_C_MOD_CREACION
+		)
+		values (
+
+			SEQ_RSDH_ARCHIVO_1.NEXTVAL,
+			#{expCExpediente,jdbcType=DECIMAL},
+			#{expCUnidadOrigen,jdbcType=DECIMAL},
+			#{rinCRequerimiento,jdbcType=DECIMAL},
+			1,
+			sysdate,
+			#{achBFile,jdbcType=OTHER},
+			#{achDContentype,jdbcType=VARCHAR},
+			#{achDArchivo,jdbcType=VARCHAR},
+			
+			1089190,
+			sysdate,
+			SYS_CONTEXT('USERENV','IP_ADDRESS'),
+			423
+		)
+
+
+	</insert>
+</mapper>

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/resources/msisdoc
+END
+ExpedienteMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/resources/msisdoc/ExpedienteMapper.xml
+END
+ArchivoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/resources/msisdoc/ArchivoMapper.xml
+END
+PersonaMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/resources/msisdoc/PersonaMapper.xml
+END
+CopiaMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/resources/msisdoc/CopiaMapper.xml
+END
+MovimientoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/resources/msisdoc/MovimientoMapper.xml
+END

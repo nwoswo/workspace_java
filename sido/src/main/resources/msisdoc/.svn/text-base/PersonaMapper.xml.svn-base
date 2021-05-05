@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.st.dao.PersonaMapper">
+
+
+	<resultMap type="pe.mef.st.bean.RsdcPersona"
+		id="personaResultMap" />
+
+
+	<select id="findDNI" resultMap="personaResultMap"
+		parameterType="map">
+
+		select
+		APELLIDO_PATERNO as perDApepat,
+		APELLIDO_MATERNO as perDApemat,
+		NOMBRES as perDNombre,
+		UBIGEO as perNUbigeo
+		from
+		FON_RENIEC
+		where
+		TIPO_DOCUMENTO = LPAD(#{param1,jdbcType=VARCHAR},2,'0') and
+		NUMERO_DOCUMENTO = #{param2,jdbcType=VARCHAR}
+
+	</select>
+
+
+	 <select id="getIdPersona" resultType="java.lang.Long" >
+	     SELECT SEQ_RSDC_PERSONA_1.NEXTVAL FROM DUAL 
+	 </select>
+    
+    <update id="updatePersona"	parameterType="pe.mef.st.bean.RsdcPersona">
+		update RSDC_PERSONA set 
+			PER_N_TIPOPERSONA = #{perNTipoPersona,jdbcType=DECIMAL},
+			PER_C_TIPODOC = #{perCTipoDoc,jdbcType=DECIMAL},
+			PER_D_NRODOC = #{perDNrodoc,jdbcType=VARCHAR},
+			PER_D_RAZONSOCIAL = UPPER(#{perDRazonSocial,jdbcType=VARCHAR}),
+			PER_D_APEPAT = UPPER(#{perDApepat,jdbcType=VARCHAR}),
+			PER_D_APEMAT = UPPER(#{perDApemat,jdbcType=VARCHAR}),
+			PER_D_NOMBRE = UPPER(#{perDNombre,jdbcType=VARCHAR}),
+			PER_D_EMAIL = #{perDEmail,jdbcType=VARCHAR},
+			PER_D_CELULAR = #{perDCelular,jdbcType=VARCHAR},
+			PER_D_TELEFONO = #{perDTelefono,jdbcType=VARCHAR},
+			PER_N_UBIGEO = #{perNUbigeo,jdbcType=VARCHAR},
+			PER_D_URBANIZACION = UPPER(#{perDUrbanizacion,jdbcType=VARCHAR}),
+			PER_D_CALLEAVE = UPPER(#{perDCalleave,jdbcType=VARCHAR}),
+			PER_D_INTERIOR = #{perDInterior,jdbcType=VARCHAR},
+			PER_D_REFERENCIA = UPPER(#{perDReferencia,jdbcType=VARCHAR})
+			where
+			PER_C_PERSONA = #{perCPersona,jdbcType=DECIMAL}
+	</update>	
+		
+		
+	<insert id="insert" parameterType="pe.mef.st.bean.RsdcPersona">
+
+		insert into RSDC_PERSONA
+		(
+		PER_C_PERSONA,
+		PER_N_TIPOPERSONA,
+		PER_C_TIPODOC,
+		PER_D_NRODOC,
+		PER_D_RAZONSOCIAL,
+		PER_D_APEPAT,
+		PER_D_APEMAT,
+		PER_D_NOMBRE,
+		PER_D_EMAIL,
+		PER_D_CELULAR,
+		PER_D_TELEFONO,
+		PER_N_UBIGEO,
+		
+		PER_D_URBANIZACION,
+		PER_D_CALLEAVE,
+		PER_D_INTERIOR,
+		PER_D_REFERENCIA,
+		PER_E_SOLICITANTE,
+
+		USC_C_USUCRE,
+		F_USUARIO_CREA,
+		IP_TERMINAL_CREA,
+		PDD_C_MOD_CREACION
+		)
+		values (
+
+		#{perCPersona,jdbcType=DECIMAL},
+		#{perNTipoPersona,jdbcType=DECIMAL},
+		#{perCTipoDoc,jdbcType=DECIMAL},
+		#{perDNrodoc,jdbcType=VARCHAR},
+		UPPER(#{perDRazonSocial,jdbcType=VARCHAR}),
+		UPPER(#{perDApepat,jdbcType=VARCHAR}),
+		UPPER(#{perDApemat,jdbcType=VARCHAR}),
+		UPPER(#{perDNombre,jdbcType=VARCHAR}),
+		#{perDEmail,jdbcType=VARCHAR},
+		#{perDCelular,jdbcType=VARCHAR},
+		#{perDTelefono,jdbcType=VARCHAR},
+		#{perNUbigeo,jdbcType=VARCHAR},
+		
+		
+		UPPER(#{perDUrbanizacion,jdbcType=VARCHAR}),
+		UPPER(#{perDCalleave,jdbcType=VARCHAR}),
+		#{perDInterior,jdbcType=VARCHAR},
+		UPPER(#{perDReferencia,jdbcType=VARCHAR}),
+		#{perESolicitante,jdbcType=DECIMAL},
+
+		1089190,
+		sysdate,
+		SYS_CONTEXT('USERENV','IP_ADDRESS'),
+		423
+
+		)
+
+
+	</insert>
+</mapper>

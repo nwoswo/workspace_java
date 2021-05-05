@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:s="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+			http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+	        http://www.springframework.org/schema/mvc 
+	        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	        http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+            
+            
+    <!--  <mvc:annotation-driven/> @RestController
+	declara soporte explícito para controladores MVC basados ​​en anotaciones (es decir @RequestMapping, @Controllera unque el soporte es el comportamiento predeterminado), 
+	y agrega soporte para validación declarativa a través de  @Validy organización de mensajes con @RequestBody/ ResponseBody. -->        
+	<mvc:annotation-driven/>
+	
+	<context:component-scan base-package="pe.mef.st.web" />
+
+	
+	<mvc:cors>
+
+    <mvc:mapping path="/api/**"
+        allowed-origins="*"
+        allowed-methods="POST, GET, PUT, OPTIONS, DELETE"
+        allowed-headers="Access-Control-Allow-Headers, x-requested-with, Content-Type"
+        exposed-headers="X-Auth-Token,Authorization,Access-Control-Allow-Origin, Access-Control-Allow-Credentials" allow-credentials="false"
+        max-age="123" /> 
+
+    
+
+</mvc:cors>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000"/>
+	</bean>
+
+  <mvc:view-controller path="/" view-name="api/inicio"/>
+
+</beans> 

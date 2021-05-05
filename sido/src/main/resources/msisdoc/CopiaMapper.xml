@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.st.dao.CopiaMapper">
+
+	
+	
+   <insert id="insert"
+		parameterType="pe.mef.st.bean.RsdhCopia">
+
+		insert into RSDH_COPIA
+		(
+			COP_C_COPIA,
+			EXP_C_EXPEDIENTE,
+			EXP_C_UNIDAD_ORIGEN,
+			EXP_C_UNIDAD_DESTINO,
+			COP_F_ENVIO,
+			COP_E_ESTADO,
+			
+			USC_C_USUCRE,
+			F_USUARIO_CREA,
+			IP_TERMINAL_CREA,
+			PDD_C_MOD_CREACION
+		)
+		values (
+
+			SEQ_RSDH_COPIA_1.NEXTVAL,
+			#{expCExpediente,jdbcType=DECIMAL},
+			#{expCUnidadOrigen,jdbcType=DECIMAL},
+			#{expCUnidadDestino,jdbcType=DECIMAL},
+			to_date(sysdate,'YYYY-MM-DD'),
+			#{copEestado,jdbcType=DECIMAL},
+			
+			1089190,
+			sysdate,
+			SYS_CONTEXT('USERENV','IP_ADDRESS'),
+			423
+
+		)
+
+
+	</insert>
+</mapper>

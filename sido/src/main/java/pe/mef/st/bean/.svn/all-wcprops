@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/bean
+END
+RtdcUnidadOrganica.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RtdcUnidadOrganica.java
+END
+RsdcPersona.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RsdcPersona.java
+END
+RsdhMovimiento.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RsdhMovimiento.java
+END
+RsdcExpediente.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RsdcExpediente.java
+END
+RsdhArchivo.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RsdhArchivo.java
+END
+RsdhCopia.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RsdhCopia.java
+END
+RacdTipoDocDetalle.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/RacdTipoDocDetalle.java
+END
+MixIn.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/bean/MixIn.java
+END

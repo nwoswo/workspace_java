@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/dao
+END
+ArchivoMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/dao/ArchivoMapper.java
+END
+PersonaMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/dao/PersonaMapper.java
+END
+CopiaMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/dao/CopiaMapper.java
+END
+ExpedienteMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/dao/ExpedienteMapper.java
+END
+MovimientoMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/dao/MovimientoMapper.java
+END

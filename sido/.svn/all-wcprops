@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/sido/!svn/ver/50/sido/trunk/sido
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/sido/!svn/ver/55/sido/trunk/sido/pom.xml
+END
+test.html
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/sido/!svn/ver/51/sido/trunk/sido/test.html
+END
+.springBeans
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/sido/!svn/ver/55/sido/trunk/sido/.springBeans
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/sido/!svn/ver/55/sido/trunk/sido/.project
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/sido/!svn/ver/55/sido/trunk/sido/.classpath
+END

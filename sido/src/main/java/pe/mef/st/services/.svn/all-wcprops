@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/services
+END
+MovimientoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/MovimientoService.java
+END
+ExpedienteService.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/ExpedienteService.java
+END
+UnidadOrganicaSerivice.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/services/UnidadOrganicaSerivice.java
+END
+PersonaService.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/services/PersonaService.java
+END
+ArchivoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/ArchivoService.java
+END

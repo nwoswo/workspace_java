@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.mef.st.dao.MovimientoMapper">
+
+	
+	
+   <insert id="insert"
+		parameterType="pe.mef.st.bean.RsdhMovimiento">
+
+		insert into RSDH_MOVIMIENTO
+		(
+			MOV_C_MOVIMIENTO,
+			EXP_C_EXPEDIENTE,
+			EXP_C_UNIDAD_ORIGEN,
+			EXP_C_UNIDAD_DESTINO,
+			EXP_C_ESTADO,
+			MOV_E_ESTADO,
+			MOV_D_OBSERVACION,
+			INS_C_INSTRUCCION,
+			
+			USC_C_USUCRE,
+			F_USUARIO_CREA,
+			IP_TERMINAL_CREA,
+			PDD_C_MOD_CREACION
+		)
+		values (
+
+			SEQ_RSDH_MOVIMIENTO_1.NEXTVAL,
+			#{expCExpediente,jdbcType=DECIMAL},
+			#{expCUnidadOrigen,jdbcType=DECIMAL},
+			#{expCUnidadDestino,jdbcType=DECIMAL},
+			#{expCEstado,jdbcType=DECIMAL},
+			#{movEEstado,jdbcType=DECIMAL},
+			#{movDObservacion,jdbcType=VARCHAR},
+			#{insCInstruccion,jdbcType=DECIMAL},
+			
+			1089190,
+			sysdate,
+			SYS_CONTEXT('USERENV','IP_ADDRESS'),
+			423
+
+		)
+
+
+	</insert>
+</mapper>

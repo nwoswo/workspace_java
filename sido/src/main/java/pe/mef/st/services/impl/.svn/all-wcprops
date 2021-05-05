@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/sido/!svn/ver/51/sido/trunk/sido/src/main/java/pe/mef/st/services/impl
+END
+MovimientoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/impl/MovimientoServiceImpl.java
+END
+ExpedienteServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/impl/ExpedienteServiceImpl.java
+END
+ArchivoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/sido/!svn/ver/55/sido/trunk/sido/src/main/java/pe/mef/st/services/impl/ArchivoServiceImpl.java
+END
