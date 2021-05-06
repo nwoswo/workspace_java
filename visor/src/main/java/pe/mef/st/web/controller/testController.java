@@ -6,19 +6,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import pe.mef.st.services.VisorService;
 
 @RestController
 @RequestMapping("/api")
 public class testController {
 	
+	@Autowired
+	VisorService vService;
 	
-	 @GetMapping("/test")
-	 public ResponseEntity<?> inicio() {
+	@GetMapping("/test")
+	public ResponseEntity<?> inicio() {
 	  
-
-			 
-		  return new ResponseEntity<String>("Hola Mundo", HttpStatus.OK);
+		String test =vService.test();
+			
+		return new ResponseEntity<String>(test, HttpStatus.OK);
 		 
-	 }
+	}
 
 }
