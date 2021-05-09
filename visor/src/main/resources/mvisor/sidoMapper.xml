@@ -3,10 +3,51 @@
 <mapper namespace="pe.mef.st.dao.SidoMapper">
 
 
-
+	<resultMap type="pe.mef.st.beans.DocumentoBean"
+		id="documentoResult">
+		
+		<result column="IDDOCUMENTO" property="idDocumento" />
+		<result column="TIPODOC" property="tipodoc" />
+		<result column="DOCUMENTO" property="documento" />
+		<result column="RAZONSOCIAL" property="razonsocial" />
+		<result column="APEPAT" property="apepat" />
+		<result column="APEMAT" property="apemat" />
+		<result column="NOMBRES" property="nombres" />
+		<result column="DOCUMENTONAME" property="documentoname" />
+		<result column="PATH" property="path" />
+		<result column="DOCUMENTOFISICO" property="documentofisico" />
+		
+			
+	</resultMap>
 
 	 <select id="test" resultType="java.lang.String" >
 	     select sysdate from dual 
+	 </select>
+	 
+	 <select id="findDNI" resultMap="documentoResult" parameterType="map" >
+	 
+	 <bind name="param11" value="'%' + param1 + '%'" />
+	 <bind name="param22" value="'%' + param2 + '%'" />
+	 <bind name="param33" value="'%' + param3 + '%'" />
+	 
+	    select 
+		IDDOCUMENTO
+		from DOCUMENTO 
+		WHERE
+			1=1 
+		<if test="param1 != null and param1 !=''">
+		
+		
+      
+		  AND RAZONSOCIAL LIKE #{param11}
+		</if>
+		<if test="param2 != null and param2 !=''">
+		  AND DOCUMENTO LIKE #{param22}
+		</if>
+		<if test="param2 != null and param3 !=''">
+		  AND DOCUMENTONAME LIKE #{param33}
+		</if>
+
 	 </select>
     
     
