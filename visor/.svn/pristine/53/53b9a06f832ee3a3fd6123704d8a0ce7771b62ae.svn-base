@@ -15,15 +15,8 @@ public interface SidoMapper {
 		@Param("numero") String numero, 
 		@Param("razonsocial") String razonsocial,
 		@Param("documento") String documento,
-		@Param("page") String page
+		@Param("page") int page
 	);
-	
-	List<DocumentoBean> findDocRuc(
-			@Param("numero") String numero, 
-			@Param("razonsocial") String razonsocial,
-			@Param("documento") String documento,
-			@Param("page") String page
-		);
 	
 	
 }

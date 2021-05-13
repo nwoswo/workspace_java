@@ -22,15 +22,9 @@ public class VisorServiceImpl implements VisorService {
 	}
 
 	@Override
-	public List<DocumentoBean> findDNI(String numero, String razonsocial, String documento, String page) {
+	public List<DocumentoBean> findDNI(String numero, String razonsocial, String documento, int page) {
 		
 		return this.sidoMapper.findDNI(numero, razonsocial, documento, page);
-	}
-	
-	@Override
-	public List<DocumentoBean> findDocRuc(String numero, String razonsocial, String documento, String page) {
-		
-		return this.sidoMapper.findDocRuc(numero, razonsocial, documento, page);
 	}
 	
 	

@@ -9,9 +9,8 @@ import org.apache.commons.io.FileUtils;
 
 public class Test {
     public static void main(String[] args) {
-    	
-        File root = new File("/home");
-        String fileName = "CV-95075-3217.pdf";
+        File root = new File("F:\\\\Node5Gen");
+        String fileName = "tsconfig.json";
         try {
             boolean recursive = true;
 
@@ -25,7 +24,5 @@ public class Test {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
     }
 }

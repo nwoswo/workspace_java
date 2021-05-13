@@ -19,22 +19,6 @@
 		
 			
 	</resultMap>
-	
-	<resultMap type="pe.mef.st.beans.DocumentoBean"
-		id="documentoResultBD">
-		
-		<result column="BAR_C_EMPL" property="idDocumento" />
-		<result column="BAR_TIPO_DOC" property="tipodoc" />
-		<result column="BAR_N_DOCUMENTO" property="documento" />
-		<result column="BAR_D_RAZSOC" property="razonsocial" />
-		
-		<result column="BAR_D_DOCUMENTO" property="documentoname" />
-		
-		<result column="BAR_D_DOCFISICO" property="documentofisico" />
-		
-			
-	</resultMap>
-	
 
 	 <select id="test" resultType="java.lang.String" >
 	     select sysdate from dual 
@@ -66,36 +50,6 @@
 			
 	       ) res
 		 WHERE  rn BETWEEN (#{page} - 1) * 3 + 1 AND #{page} * 3
-		
-
-	 </select>
-	 
-	 <select id="findDocRuc" resultMap="documentoResultBD" parameterType="map" >
-	 
-	 
-	 <bind name="param22" value="'%' + razonsocial + '%'" />
-	 <bind name="param33" value="'%' + documento + '%'" />
-	 
-	     SELECT res.*,
-       	 CEIL(tnumrows/3) tnumpages
-		 FROM   (SELECT o.*,
-	              row_number() OVER (ORDER BY BAR_C_EMPL DESC) rn,
-	              COUNT(*) OVER () tnumrows
-	       FROM   GPED_BUS_ARCHI o
-	       where
-	       	1=1 and ROWNUM <![CDATA[ <=  ]]>  150
-			<if test="numero != null and numero != '' and numero != 'null' ">
-			  AND BAR_N_DOCUMENTO = #{numero}
-			</if>
-			<if test="razonsocial != null and razonsocial != '' and razonsocial != 'null' ">
-			  AND UPPER(BAR_D_RAZSOC) LIKE UPPER(#{param22})
-			</if>
-			<if test="documento != null and documento != '' and documento != 'null' ">
-			  AND UPPER(BAR_D_DOCUMENTO) LIKE UPPER(#{param33})
-			</if>
-			
-	       ) res
-		 WHERE  rn BETWEEN (#{page} - 1) * 15 + 1 AND #{page} * 15 
 		
 
 	 </select>

@@ -27,7 +27,7 @@ public class ListFilesRecursively {
     }
     public static void main(String[] args) {
         ListFilesRecursively test = new ListFilesRecursively();
-        String startDir = ("/home/nwo/Documentos");
+        String startDir = ("F:\\Node5Gen");
         test.listFiles(startDir);
     }
 }

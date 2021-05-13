@@ -1,0 +1,68 @@
+package pe.mef.st.web.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import pe.mef.st.beans.DocumentoBean;
+import pe.mef.st.services.VisorService;
+
+@RestController
+@RequestMapping("/api")
+public class testController {
+	
+	private Logger logger = Logger.getLogger(testController.class);
+	
+	@Autowired
+	VisorService vService;
+	
+	@GetMapping("/test")
+	public ResponseEntity<?> inicio() {
+	  
+		String test =vService.test();
+			
+		return new ResponseEntity<String>(test, HttpStatus.OK);
+		 
+	}
+	@CrossOrigin(origins = "*")
+	@GetMapping("/findjuridica")
+	 public ResponseEntity<?> inicio(
+		 @RequestParam("numero") String numero, 
+		 @RequestParam("razonsocial") String razonsocial,
+		 @RequestParam("documento") String documento,
+		 @RequestParam("page") int page){
+		
+		List<?> l;
+		
+		logger.info("This is an info log entry");
+        logger.error("This is an error log entry");
+        
+        if( (numero ==null || numero == "") && (razonsocial ==null || razonsocial == "") && (documento ==null || documento == "") ) {
+        	l = new ArrayList<>();
+        }else {
+        	
+        	l = this.vService.findDNI(numero, razonsocial, documento, page);
+        }
+        	
+        
+			
+		return new ResponseEntity<List>(l, HttpStatus.OK);
+		 
+	}
+	
+
+	
+
+}
